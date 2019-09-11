@@ -1,29 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
+import { CoreModule } from './core/core.module';
 
+import { GlobalErrorHandler } from './global-error-handler';
 import { AppComponent } from './app.component';
 
 /** All the imported modules go here */
-const modules: any[] = [
+const MODULES: any[] = [
   BrowserModule,
   AppRoutingModule,
   CommonModule,
-  AngularMaterialModule
+  HttpClientModule,
+  AngularMaterialModule,
+  CoreModule
 ];
 
 /** All the components go here */
-const components: any[] = [
+const COMPONENTS: any[] = [
   AppComponent
 ];
 
 @NgModule({
-  declarations: [components],
-  imports: [modules],
-  providers: [],
+  declarations: [COMPONENTS],
+  imports: [MODULES],
+  providers: [
+    {provide: ErrorHandler, useClass: GlobalErrorHandler}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
